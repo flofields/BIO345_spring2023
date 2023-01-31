@@ -131,8 +131,7 @@ library(Rmisc) #loading package into environment
 rodents.summary <- summarySE(rodents.clean, measurevar = "weight", groupvars = "sex") #obtaining summary statistics
 
 # T-test
-t.test(weight, sex,data = rodents.clean, paired=TRUE)
-t.test(rodents.clean$weight ~ rodents.clean$sex) 
+t.test(rodents.clean$weight,rodents.clean$sex) 
 
 #slope
 plot(weight ~ hindfoot_length, data = rodents.male) #scatterplot
