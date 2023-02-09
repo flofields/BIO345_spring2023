@@ -1,9 +1,59 @@
-git branch -m Lab1_Statistics_R BIO345_Lab_Data_Scripts
-git fetch origin
-git branch -u origin/BIO345_Lab_Data_Scripts BIO345_Lab_Data_Scripts
-git remote set-head origin -a
-
 #BIO345
 #Lab 2 R Script
 #TA: Flo
 
+# Goal - to learn how to make standard curve and extrapolate data 
+
+- Part I - Question: What is the maximum absorbance of the “pigment” (food coloring)?
+
+#First you need to first import your data. Some of you imported your data from google sheets so I included the script for that too
+Lab2_Data <- read.csv("Inserts name of csv file") 
+#or
+library(googlesheets4)
+Lab2_Data <- read_sheet('Inserts google sheets link')
+
+
+#If you are plotting your graph in R studio you need to install these packages first 
+install.packages("dplyr")
+install.packages ("tidyverse")
+install.packages ("ggplot2")
+install.packages ("readr")
+install.packages("stringr")
+install.packages("gridExtra")
+install.packages("grid")
+install.packages("lattice")
+install.packages("Rmisc")
+
+
+library(dplyr)
+library(tidyverse)
+library(readr)
+library(stringr)
+library(gridExtra)
+library(grid)
+library(ggplot2)
+library(lattice)
+library(Rmisc)
+
+#The Google Sheets has both the unknown and standard samples so you will have to subset the data to obtain only the standard samples
+standard_curve <- Lab2_Data %>% 
+  filter(Sample.Type == "Standard") 
+
+#Plotting your standard curve graph
+
+
+Standard_Curve_Plot<- ggplot(data = standard_curve, aes(x=Concentration, y=Absorbance)) + #plotting standard curve
+  ylab("Absorbance (nm)")+ xlab("Concentration") + #axis labels
+  geom_point()+ #points
+  geom_smooth(method = "lm") + #add line
+  theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(),
+                     panel.grid.minor = element_blank(), axis.line = element_line(colour = "black")) +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+lmstandard <- lm (Concentration ~ Absorbance, data = standard_curve) #creating linear model
+lmsummary <- summary(lmstandard) #summarizing model
+
+samples <- TP_Data_all %>% #subsetting Samples
+  filter(Sample.Type == "Sample") 
+
+samples$Concentration.calc <- predict(lmstandard, newdata = samples) #using model to get concentration
