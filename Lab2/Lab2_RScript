@@ -1,5 +1,6 @@
 #BIO345
 #Lab 2 R Script
+#Co aurthur: Kevin Wong
 #TA: Flo
 
 # Goal - to learn how to make standard curve and extrapolate data 
@@ -76,6 +77,10 @@ samples <- Lab2_Data %>% #subsetting Samples
   filter(Sample.Type == "Sample") 
 
 samples$Concentration.calc <- predict(lmstandard, newdata = samples) #This line of code uses the model to get concentrations of the unknowns.
+
+#The statistical test you will be using for part three will be the ANOVA test.
+#There is a link below I suggest you use to help with your understanding of what this test is used for. 
+#https://www.statisticshowto.com/probability-and-statistics/hypothesis-testing/anova/
 
 
 
