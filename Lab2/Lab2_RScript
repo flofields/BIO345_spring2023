@@ -1,0 +1,9 @@
+git branch -m Lab1_Statistics_R BIO345_Lab_Data_Scripts
+git fetch origin
+git branch -u origin/BIO345_Lab_Data_Scripts BIO345_Lab_Data_Scripts
+git remote set-head origin -a
+
+#BIO345
+#Lab 2 R Script
+#TA: Flo
+
