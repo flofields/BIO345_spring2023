@@ -4,7 +4,13 @@
 
 # Goal - to learn how to make standard curve and extrapolate data 
 
-- Part I - Question: What is the maximum absorbance of the “pigment” (food coloring)?
+#Part I - Question: What is the maximum absorbance of the “pigment” (food coloring)?
+
+#I suggest creating an excel or google sheet file with two rows "wavelength" and "Absorbance" then importing the file in R Studio. 
+#You can then use the R script from assignment 1 to create a plot. Use the four box recipe to determine what plot you could graph. 
+#No statistical test is necessary for this part.
+
+#Part II- Question: What is the relationship between the Absorbance (at the wavelength identified above) and the food color concentration?
 
 #First you need to first import your data. Some of you imported your data from google sheets so I included the script for that too
 Lab2_Data <- read.csv("Inserts name of csv file") 
@@ -53,7 +59,23 @@ Standard_Curve_Plot<- ggplot(data = standard_curve, aes(x=Concentration, y=Absor
 lmstandard <- lm (Concentration ~ Absorbance, data = standard_curve) #creating linear model
 lmsummary <- summary(lmstandard) #summarizing model
 
-samples <- TP_Data_all %>% #subsetting Samples
+#OR
+
+
+model <-lm(Concentration ~ Absorbance, data=Standard_Curve_Plot) #runs a linear regression
+coe <- coef(model) #extracts the coeffecients (values needed for the slope of a line equation)
+R2 <-summary(model)$r.squared
+plot(Concentration ~ Absorbance, data=Standard_Curve_Plot)
+abline(lm(Concentration ~ Absorbance, data=Standard_Curve_Plot))
+summary(model)
+
+
+#Part III - Question: What are the rust tide concentrations at the different sites? 
+
+samples <- Lab2_Data %>% #subsetting Samples
   filter(Sample.Type == "Sample") 
 
-samples$Concentration.calc <- predict(lmstandard, newdata = samples) #using model to get concentration
+samples$Concentration.calc <- predict(lmstandard, newdata = samples) #This line of code uses the model to get concentrations of the unknowns.
+
+
+
