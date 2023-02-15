@@ -83,9 +83,9 @@ samples$Concentration.calc <- predict(lmstandard, newdata = samples) #This line 
 #https://www.statisticshowto.com/probability-and-statistics/hypothesis-testing/anova/
 
 One way anova 
-Anova_one_way <- aov(Absorbance ~ Concentration, data = samples) #one way Anova
+Anova_one_way <- aov(Absorbance ~ samples$Concentration.calc, data = samples) #one way Anova
 summary(Anova_one_way)
 
-Anova_two_way <- aov(Absorbance ~ Concentration*Sample, data = samples) #Two way Anova
+Anova_two_way <- aov(Absorbance ~ samples$Concentration.calc*Sample, data = samples) #Two way Anova
 summary(Anova_two_way)
 
