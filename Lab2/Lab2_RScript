@@ -49,7 +49,7 @@ standard_curve <- Lab2_Data %>%
 #Plotting your standard curve graph
 
 
-Standard_Curve_Plot<- ggplot(data = standard_curve, aes(x=Concentration, y=Absorbance)) + #plotting standard curve
+ggplot(data = standard_curve, aes(x=Concentration, y=Absorbance)) + #plotting standard curve
   ylab("Absorbance (nm)")+ xlab("Concentration") + #axis labels
   geom_point()+ #points
   geom_smooth(method = "lm") + #add line
